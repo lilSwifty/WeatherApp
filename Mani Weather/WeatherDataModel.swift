@@ -8,6 +8,8 @@
 
 import UIKit
 
+//öpnna mappen  finder
+
 class WeatherDataModel {
     
     var temperatue : Int = 0
@@ -16,6 +18,7 @@ class WeatherDataModel {
     var humidity : Int = 0
     var pressure : Int = 0
     var weatherIconName : String = ""
+   // var string = "hej"
     
     
     
