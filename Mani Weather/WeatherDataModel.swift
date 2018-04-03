@@ -17,8 +17,49 @@ class WeatherDataModel {
     var humidity : Int = 0
     var pressure : Int = 0
     var weatherIconName : String = ""
+    var tips : String = ""
     
-    
+    func giveGoodTips(condition: Int) -> String {
+        
+        switch (condition) {
+            
+        case 0...300 :
+            return "It's windy outside! Hold your hat!"
+            
+        case 301...500 :
+            return "You might experience some light rain.."
+            
+        case 501...600 :
+            return "Don't forget your umbrella!"
+            
+        case 601...700 :
+            return "It's snowing! Grab some good boots!"
+            
+        case 701...771 :
+            return "Be careful if you're driving..."
+            
+        case 772...799 :
+            return "Expect the worst. Best to just keep inside!"
+            
+        case 800 :
+            return "What a lovely weather, you should go for a walk"
+            
+        case 801...804 :
+            return "You might see the sun..."
+            
+        case 900...903, 905...1000  :
+            return "Holy shit, it's armageddon"
+            
+        case 903 :
+            return "snow, snow, snow, when will it end?"
+            
+        case 904 :
+            return "Glory! Praise the lord for this weather"
+            
+        default :
+            return "dunno"
+        }
+    }
     
     func updateWeatherIcon(condition: Int) -> String {
         

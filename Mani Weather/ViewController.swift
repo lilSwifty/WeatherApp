@@ -24,18 +24,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     
     var cityListArray : [WeatherDataModel] = []
     var favoriteCities : [WeatherDataModel] = []
+    
     var newHomeScreenModel : WeatherDataModel?
     
-    //let weatherDataModel = WeatherDataModel()
     let locationManager = CLLocationManager()
-
     
+//    let defaults = UserDefaults.standard
+
     
     @IBOutlet weak var weatherLogo: UIImageView!
     @IBOutlet weak var cityName: UILabel!
     @IBOutlet weak var temp: UILabel!
     @IBOutlet weak var humidityStatus: UILabel!
     @IBOutlet weak var pressureStatus: UILabel!
+    @IBOutlet weak var tipsLabel: UILabel!
     
     
     
@@ -46,6 +48,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        
         
         self.weatherLogo.alpha = 0.0
         self.cityName.alpha = 0.0
@@ -61,6 +65,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
             print("list empty")
         } else {
             favoriteCities.append(favoriteCity!)
+//            self.defaults.set(self.favoriteCities, forKey: "FavoriteCities")
         }
         
     }
@@ -116,21 +121,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
             
             newCityAdd.weatherIconName = newCityAdd.updateWeatherIcon(condition: newCityAdd.condition)
             
+            newCityAdd.tips = newCityAdd.giveGoodTips(condition: newCityAdd.condition)
+            
             cityListArray.append(newCityAdd)
             
             updateUIWithWeatherData(city : newCityAdd)
-            
+                        
         } else {
             cityName.text = "Weather Unavailable"
         }
     }
     
+
+    
     func updateUIWithWeatherData(city : WeatherDataModel) {
         cityName.text = city.city
         temp.text = String("\(city.temperatue)℃")
         weatherLogo.image = UIImage(named: city.weatherIconName)
-        humidityStatus.text = String("\(city.humidity)")
-        pressureStatus.text = String("\(city.pressure)")
+        humidityStatus.text = String("Humidity: \(city.humidity)")
+        pressureStatus.text = String("Pressure: \(city.pressure)")
+        tipsLabel.text = city.tips
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -168,6 +178,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
             let destinationVC = segue.destination as! NewCityViewController
             destinationVC.delegate = self
         } else if segue.identifier == "addAndShow" || segue.identifier == "justShow"{
+//            if let cities = defaults.array(forKey: "FavoriteCities") as? [WeatherDataModel] {
+//                favoriteCities = cities
+//            }
             let destionationVC = segue.destination as! secondViewController
             destionationVC.cityListArray = favoriteCities
             destionationVC.weatherDelegate = self
@@ -179,6 +192,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         updateUIWithWeatherData(city: city)
         
     }
+    
+    
     
     
     
