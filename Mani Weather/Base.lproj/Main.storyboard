@@ -29,12 +29,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cO-Dk-ydW">
-                                <rect key="frame" x="297" y="618.5" width="62" height="30"/>
-                                <state key="normal" title="Continue">
+                                <rect key="frame" x="273" y="613.5" width="86" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Add to list">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="42B-U5-1x6" kind="show" identifier="leaveMainView" id="qEB-c1-gKd"/>
+                                    <action selector="addCityToList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xsX-ef-AUD"/>
+                                    <segue destination="42B-U5-1x6" kind="show" identifier="addAndShow" id="hEf-5F-zce"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="℃" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eqe-oO-4fy">
@@ -81,19 +83,43 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wml-Y1-sK9">
+                                <rect key="frame" x="281" y="36" width="78" height="48"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="26"/>
+                                <state key="normal" title="Search">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="0k4-mQ-bG7" kind="show" identifier="searchCity" id="uOE-mE-f0m"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3WC-pP-FjQ">
+                                <rect key="frame" x="16" y="613" width="129" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Show Favorites">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="42B-U5-1x6" kind="show" identifier="justShow" id="hyS-eZ-jDM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="J6H-oJ-mXZ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="0Wn-XC-yW2"/>
                             <constraint firstItem="jmC-H4-9Sb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4ZN-mo-esT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3WC-pP-FjQ" secondAttribute="bottom" constant="19" id="6a3-4Q-vJF"/>
                             <constraint firstItem="J6H-oJ-mXZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="7vs-PH-CYJ"/>
                             <constraint firstItem="36m-7A-Ttx" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="DWY-HA-bU4"/>
                             <constraint firstItem="Eqe-oO-4fy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="14" id="F91-dD-iuB"/>
+                            <constraint firstItem="3WC-pP-FjQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="FUg-Gl-9cd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4cO-Dk-ydW" secondAttribute="trailing" constant="16" id="GkN-FQ-oDI"/>
                             <constraint firstItem="J6H-oJ-mXZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OAS-QY-7Xb"/>
                             <constraint firstItem="Eqe-oO-4fy" firstAttribute="top" secondItem="36m-7A-Ttx" secondAttribute="bottom" constant="110" id="PC7-Iq-gUS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Wml-Y1-sK9" secondAttribute="trailing" constant="16" id="QIp-Hw-o00"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4cO-Dk-ydW" secondAttribute="bottom" constant="18.5" id="T5C-Ut-ex7"/>
                             <constraint firstItem="J6H-oJ-mXZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Tl3-U8-OGs"/>
+                            <constraint firstItem="Wml-Y1-sK9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="U0u-5W-fCl"/>
                             <constraint firstItem="36m-7A-Ttx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Udu-5O-uCb"/>
                             <constraint firstItem="J6H-oJ-mXZ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="UnX-w8-7gn"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jmC-H4-9Sb" secondAttribute="trailing" id="XEd-ih-cf9"/>
@@ -190,7 +216,6 @@
                                             <outlet property="cityLabel" destination="aPd-qa-qpv" id="KDD-mi-f6G"/>
                                             <outlet property="tempLabel" destination="ugx-4j-s47" id="D8v-nV-sGr"/>
                                             <outlet property="weatherIcon" destination="4MT-NA-23f" id="bf7-sG-vKj"/>
-                                            <segue destination="K4s-71-DH1" kind="show" identifier="previewController" id="DSq-da-e1u"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -199,11 +224,11 @@
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
-                                <state key="normal" title="Add City">
+                                <state key="normal" title="Return">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="0k4-mQ-bG7" kind="show" identifier="newSearch" id="qF8-sM-OY8"/>
+                                    <action selector="goBack:" destination="42B-U5-1x6" eventType="touchUpInside" id="Rii-aC-EnG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -225,7 +250,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U9D-9k-tmG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="572" y="94.902548725637189"/>
+            <point key="canvasLocation" x="735" y="484"/>
         </scene>
         <!--New City View Controller-->
         <scene sceneID="NRU-KT-UP9">
@@ -238,16 +263,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background5" translatesAutoresizingMaskIntoConstraints="NO" id="Mv0-eA-EVn">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type a city..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DZX-bB-aWj">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type a city..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DZX-bB-aWj">
                                 <rect key="frame" x="71" y="126" width="233" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="233" id="sqH-Q5-25v"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qQ6-QH-7KY">
-                                <rect key="frame" x="150" y="179" width="75" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qQ6-QH-7KY">
+                                <rect key="frame" x="150" y="179" width="75" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="P7M-8r-rmA"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="21"/>
                                 <state key="normal" title="Search">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -259,10 +288,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="vFI-k9-IIp" firstAttribute="trailing" secondItem="qQ6-QH-7KY" secondAttribute="trailing" constant="150" id="8hD-hU-TLb"/>
                             <constraint firstItem="Mv0-eA-EVn" firstAttribute="top" secondItem="r7h-bN-WbI" secondAttribute="top" id="Dhf-OX-d0o"/>
+                            <constraint firstItem="vFI-k9-IIp" firstAttribute="trailing" secondItem="DZX-bB-aWj" secondAttribute="trailing" constant="71" id="GNV-57-sQO"/>
+                            <constraint firstItem="DZX-bB-aWj" firstAttribute="leading" secondItem="vFI-k9-IIp" secondAttribute="leading" constant="71" id="IF4-po-5gb"/>
                             <constraint firstItem="Mv0-eA-EVn" firstAttribute="trailing" secondItem="vFI-k9-IIp" secondAttribute="trailing" id="Ktq-Le-CU8"/>
+                            <constraint firstItem="qQ6-QH-7KY" firstAttribute="leading" secondItem="vFI-k9-IIp" secondAttribute="leading" constant="150" id="NZY-zE-H3f"/>
                             <constraint firstItem="Mv0-eA-EVn" firstAttribute="leading" secondItem="vFI-k9-IIp" secondAttribute="leading" id="SsL-h9-Hzr"/>
+                            <constraint firstItem="DZX-bB-aWj" firstAttribute="top" secondItem="vFI-k9-IIp" secondAttribute="top" constant="106" id="cDd-ra-hBh"/>
                             <constraint firstItem="Mv0-eA-EVn" firstAttribute="bottom" secondItem="vFI-k9-IIp" secondAttribute="bottom" id="nJG-Ys-Png"/>
+                            <constraint firstItem="qQ6-QH-7KY" firstAttribute="top" secondItem="DZX-bB-aWj" secondAttribute="bottom" constant="23" id="xKR-Kp-GH5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vFI-k9-IIp"/>
                     </view>
@@ -272,87 +307,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I9K-tn-TbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1638" y="165"/>
-        </scene>
-        <!--View City View Controller-->
-        <scene sceneID="srq-dk-UIw">
-            <objects>
-                <viewController id="K4s-71-DH1" customClass="ViewCityViewController" customModule="Mani_Weather" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="DnM-hG-muY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background5" translatesAutoresizingMaskIntoConstraints="NO" id="9a5-Uh-XXf">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ycD-hn-6La">
-                                <rect key="frame" x="0.0" y="206" width="375" height="74"/>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="54"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="℃" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vi7-Sf-4hW">
-                                <rect key="frame" x="0.0" y="68" width="375" height="121"/>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="88"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.4793409179" green="0.5" blue="0.49323037390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sunny" translatesAutoresizingMaskIntoConstraints="NO" id="EA0-N2-giC">
-                                <rect key="frame" x="0.0" y="304" width="375" height="128"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O4m-d7-VwO">
-                                <rect key="frame" x="273" y="35" width="92" height="40"/>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
-                                <state key="normal" title="Add to list">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVI-cb-gaO">
-                                <rect key="frame" x="15" y="40" width="43" height="40"/>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
-                                <state key="normal" title="Back">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="goBack:" destination="K4s-71-DH1" eventType="touchUpInside" id="WE7-UM-F6O"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="9a5-Uh-XXf" firstAttribute="leading" secondItem="qPB-EV-9WD" secondAttribute="leading" id="4Cz-wh-wKj"/>
-                            <constraint firstItem="EA0-N2-giC" firstAttribute="centerX" secondItem="DnM-hG-muY" secondAttribute="centerX" id="5YE-3K-7D5"/>
-                            <constraint firstItem="ycD-hn-6La" firstAttribute="leading" secondItem="qPB-EV-9WD" secondAttribute="leading" id="6o1-BX-1MK"/>
-                            <constraint firstItem="EA0-N2-giC" firstAttribute="top" secondItem="ycD-hn-6La" secondAttribute="bottom" constant="24" id="85s-ve-lvh"/>
-                            <constraint firstItem="9a5-Uh-XXf" firstAttribute="trailing" secondItem="qPB-EV-9WD" secondAttribute="trailing" id="91x-X8-gpA"/>
-                            <constraint firstItem="EA0-N2-giC" firstAttribute="leading" secondItem="qPB-EV-9WD" secondAttribute="leading" id="DTx-eJ-BGe"/>
-                            <constraint firstItem="9a5-Uh-XXf" firstAttribute="bottom" secondItem="qPB-EV-9WD" secondAttribute="bottom" id="Dpw-YB-wlW"/>
-                            <constraint firstItem="Vi7-Sf-4hW" firstAttribute="leading" secondItem="qPB-EV-9WD" secondAttribute="leading" id="Fzc-6D-y5T"/>
-                            <constraint firstItem="O4m-d7-VwO" firstAttribute="top" secondItem="qPB-EV-9WD" secondAttribute="top" constant="15" id="KcF-sB-kzw"/>
-                            <constraint firstItem="qPB-EV-9WD" firstAttribute="trailing" secondItem="O4m-d7-VwO" secondAttribute="trailing" constant="10" id="Q0O-X2-U1e"/>
-                            <constraint firstItem="qPB-EV-9WD" firstAttribute="trailing" secondItem="EA0-N2-giC" secondAttribute="trailing" id="QbF-T9-6FD"/>
-                            <constraint firstItem="sVI-cb-gaO" firstAttribute="top" secondItem="qPB-EV-9WD" secondAttribute="top" constant="20" id="Qu5-3L-QCI"/>
-                            <constraint firstItem="qPB-EV-9WD" firstAttribute="trailing" secondItem="ycD-hn-6La" secondAttribute="trailing" id="Rnc-Nz-S89"/>
-                            <constraint firstItem="sVI-cb-gaO" firstAttribute="leading" secondItem="qPB-EV-9WD" secondAttribute="leading" constant="15" id="cco-s6-wIC"/>
-                            <constraint firstItem="ycD-hn-6La" firstAttribute="centerX" secondItem="DnM-hG-muY" secondAttribute="centerX" id="nrT-bZ-sLA"/>
-                            <constraint firstItem="Vi7-Sf-4hW" firstAttribute="trailing" secondItem="qPB-EV-9WD" secondAttribute="trailing" id="pKO-O3-YMW"/>
-                            <constraint firstItem="9a5-Uh-XXf" firstAttribute="top" secondItem="DnM-hG-muY" secondAttribute="top" id="seG-ZN-COu"/>
-                            <constraint firstItem="ycD-hn-6La" firstAttribute="top" secondItem="Vi7-Sf-4hW" secondAttribute="bottom" constant="17" id="shN-2v-xnX"/>
-                            <constraint firstItem="Vi7-Sf-4hW" firstAttribute="top" secondItem="qPB-EV-9WD" secondAttribute="top" constant="48" id="wQP-IK-7nc"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="qPB-EV-9WD"/>
-                    </view>
-                    <connections>
-                        <outlet property="cityName" destination="ycD-hn-6La" id="y4E-3X-HjL"/>
-                        <outlet property="temp" destination="Vi7-Sf-4hW" id="Tdy-yh-JPG"/>
-                        <outlet property="weatherLogo" destination="EA0-N2-giC" id="btm-TR-Vta"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BaK-NW-KVB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="572" y="863"/>
+            <point key="canvasLocation" x="1335" y="95"/>
         </scene>
     </scenes>
     <resources>
@@ -360,4 +315,7 @@
         <image name="sunny" width="128" height="128"/>
         <image name="weather-background1" width="640" height="1136"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="hyS-eZ-jDM"/>
+    </inferredMetricsTieBreakers>
 </document>

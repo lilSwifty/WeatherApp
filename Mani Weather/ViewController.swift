@@ -11,19 +11,32 @@ import CoreLocation
 import Alamofire
 import SwiftyJSON
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+protocol showPussyProtocol {
+    func showTheHotPocket(city : WeatherDataModel)
+}
+
+class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate, showPussyProtocol{
+    
+    
     
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
     
-    let weatherDataModel = WeatherDataModel()
+    var cityListArray : [WeatherDataModel] = []
+    var favoriteCities : [WeatherDataModel] = []
+    var newHomeScreenModel : WeatherDataModel?
+    
+    //let weatherDataModel = WeatherDataModel()
     let locationManager = CLLocationManager()
 
+    
+    
     @IBOutlet weak var weatherLogo: UIImageView!
     @IBOutlet weak var cityName: UILabel!
     @IBOutlet weak var temp: UILabel!
     @IBOutlet weak var humidityStatus: UILabel!
     @IBOutlet weak var pressureStatus: UILabel!
+    
     
     
     override func viewDidLoad() {
@@ -39,9 +52,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.temp.alpha = 0.0
         showAllViews()
         
-        
     }
 
+    @IBAction func addCityToList(_ sender: Any) {
+        
+        let favoriteCity = cityListArray.last
+        if cityListArray.count < 1 {
+            print("list empty")
+        } else {
+            favoriteCities.append(favoriteCity!)
+        }
+        
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -78,31 +102,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         if let tempResult = json["main"]["temp"].double{
             
-            weatherDataModel.temperatue = Int(tempResult - 273.15)
+            let newCityAdd = WeatherDataModel()
             
-            weatherDataModel.city = json["name"].stringValue
+            newCityAdd.temperatue = Int(tempResult - 273.15)
             
-            weatherDataModel.condition = json["weather"][0]["id"].intValue
+            newCityAdd.city = json["name"].stringValue
             
-            weatherDataModel.humidity = json["main"]["humidity"].intValue
+            newCityAdd.condition = json["weather"][0]["id"].intValue
             
-            weatherDataModel.pressure = json["main"]["pressure"].intValue
+            newCityAdd.humidity = json["main"]["humidity"].intValue
             
-            weatherDataModel.weatherIconName = weatherDataModel.updateWeatherIcon(condition: weatherDataModel.condition)
+            newCityAdd.pressure = json["main"]["pressure"].intValue
             
-            updateUIWithWeatherData()
+            newCityAdd.weatherIconName = newCityAdd.updateWeatherIcon(condition: newCityAdd.condition)
+            
+            cityListArray.append(newCityAdd)
+            
+            updateUIWithWeatherData(city : newCityAdd)
             
         } else {
             cityName.text = "Weather Unavailable"
         }
     }
     
-    func updateUIWithWeatherData() {
-        cityName.text = weatherDataModel.city
-        temp.text = String("\(weatherDataModel.temperatue)℃")
-        weatherLogo.image = UIImage(named: weatherDataModel.weatherIconName)
-        humidityStatus.text = String("\(weatherDataModel.humidity)")
-        pressureStatus.text = String("\(weatherDataModel.pressure)")
+    func updateUIWithWeatherData(city : WeatherDataModel) {
+        cityName.text = city.city
+        temp.text = String("\(city.temperatue)℃")
+        weatherLogo.image = UIImage(named: city.weatherIconName)
+        humidityStatus.text = String("\(city.humidity)")
+        pressureStatus.text = String("\(city.pressure)")
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -127,6 +155,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         print(error)
         cityName.text = "Location unavailable"
     }
+    
+    func userEnteredANewCityName(city: String) {
+        
+        let params : [String : String] = ["q" : city, "appid" : APP_ID]
+        
+        getWeatherData(url: WEATHER_URL, parameters: params)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "searchCity" {
+            let destinationVC = segue.destination as! NewCityViewController
+            destinationVC.delegate = self
+        } else if segue.identifier == "addAndShow" || segue.identifier == "justShow"{
+            let destionationVC = segue.destination as! secondViewController
+            destionationVC.cityListArray = favoriteCities
+            destionationVC.weatherDelegate = self
+            
+        }
+    }
+    func showTheHotPocket(city : WeatherDataModel) {
+        print("drip drop din jävla fitta")
+        updateUIWithWeatherData(city: city)
+        
+    }
+    
     
     
 }

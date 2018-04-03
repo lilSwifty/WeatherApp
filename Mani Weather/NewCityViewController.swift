@@ -10,30 +10,25 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-protocol previewCityDelegate {
+protocol ChangeCityDelegate {
     func userEnteredANewCityName (city: String)
 }
 
 
+class NewCityViewController: UIViewController{
 
-class NewCityViewController: UIViewController {
+  
+    //var cityListData : [WeatherDataModel] = []
     
-    let weatherDataModel = WeatherDataModel()
-    
-    var addTemp = ""
-    
-    
-    var secondVC : secondViewController!
+    var delegate : ChangeCityDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 
@@ -41,28 +36,14 @@ class NewCityViewController: UIViewController {
     
     @IBAction func getCityButton(_ sender: AnyObject) {
         
-//        performSegue(withIdentifier: "newSearch", sender: self)
-    
+        let cityName = newCityTextField.text!
         
-        secondVC.addCities.append(newCityTextField.text!)
-        //secondVC.addTemp.append("\(weatherDataModel.temperatue)℃")
+        delegate?.userEnteredANewCityName(city: cityName)
+        
         self.dismiss(animated: true, completion: nil)
-        
-        
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "newSearch" {
-//
-//            secondVC.addCities.append(newCityTextField.text!)
-//
-//            let secondVC = segue.destination as! secondViewController
-//
-//            secondVC.cityList.append(newCityTextField.text!)
-//
-//            self.dismiss(animated: true, completion: nil)
-//
-//        }
-//    }
-
+    
+    
+    
 }

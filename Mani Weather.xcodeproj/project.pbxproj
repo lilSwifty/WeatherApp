@@ -10,8 +10,8 @@
 		534B646F206734C300D798F3 /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B646E206734C300D798F3 /* WeatherDataModel.swift */; };
 		534B647720681DFD00D798F3 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B647620681DFD00D798F3 /* CustomTableViewCell.swift */; };
 		534B647920690FB700D798F3 /* NewCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B647820690FB700D798F3 /* NewCityViewController.swift */; };
-		534B647B20690FEB00D798F3 /* ViewCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B647A20690FEB00D798F3 /* ViewCityViewController.swift */; };
 		534B6481206A86C600D798F3 /* secondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B6480206A86C600D798F3 /* secondViewController.swift */; };
+		534B6483206E41AE00D798F3 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B6482206E41AD00D798F3 /* WeatherData.swift */; };
 		538338072066AABE00DD5BF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538338062066AABE00DD5BF0 /* AppDelegate.swift */; };
 		538338092066AABE00DD5BF0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538338082066AABE00DD5BF0 /* ViewController.swift */; };
 		5383380C2066AABE00DD5BF0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5383380A2066AABE00DD5BF0 /* Main.storyboard */; };
@@ -25,8 +25,8 @@
 		534B646E206734C300D798F3 /* WeatherDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
 		534B647620681DFD00D798F3 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		534B647820690FB700D798F3 /* NewCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCityViewController.swift; sourceTree = "<group>"; };
-		534B647A20690FEB00D798F3 /* ViewCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCityViewController.swift; sourceTree = "<group>"; };
 		534B6480206A86C600D798F3 /* secondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = secondViewController.swift; sourceTree = "<group>"; };
+		534B6482206E41AD00D798F3 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		538338032066AABE00DD5BF0 /* Mani Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mani Weather.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		538338062066AABE00DD5BF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		538338082066AABE00DD5BF0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,9 +88,9 @@
 				538338082066AABE00DD5BF0 /* ViewController.swift */,
 				534B646E206734C300D798F3 /* WeatherDataModel.swift */,
 				534B6480206A86C600D798F3 /* secondViewController.swift */,
+				534B6482206E41AD00D798F3 /* WeatherData.swift */,
 				534B647620681DFD00D798F3 /* CustomTableViewCell.swift */,
 				534B647820690FB700D798F3 /* NewCityViewController.swift */,
-				534B647A20690FEB00D798F3 /* ViewCityViewController.swift */,
 			);
 			path = "Mani Weather";
 			sourceTree = "<group>";
@@ -236,10 +236,10 @@
 			files = (
 				534B6481206A86C600D798F3 /* secondViewController.swift in Sources */,
 				534B647720681DFD00D798F3 /* CustomTableViewCell.swift in Sources */,
-				534B647B20690FEB00D798F3 /* ViewCityViewController.swift in Sources */,
 				538338092066AABE00DD5BF0 /* ViewController.swift in Sources */,
 				538338072066AABE00DD5BF0 /* AppDelegate.swift in Sources */,
 				534B647920690FB700D798F3 /* NewCityViewController.swift in Sources */,
+				534B6483206E41AE00D798F3 /* WeatherData.swift in Sources */,
 				534B646F206734C300D798F3 /* WeatherDataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
