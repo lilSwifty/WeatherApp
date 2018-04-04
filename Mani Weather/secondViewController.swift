@@ -10,24 +10,31 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
+
+
 class secondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     
-    
-    var weatherDelegate : showPussyProtocol?
+    var weatherDelegate : showWeatherProtocol?
     
     let weatherDataModel = WeatherDataModel()
     
     var cityListArray : [WeatherDataModel] = []
     
+    var loadedCities : [String] = []
+    
     var delegate : ChangeCityDelegate?
     
+    let defaults = UserDefaults.standard
+    
     @IBOutlet weak var tableView: UITableView!
+    
+    
     
     @IBAction func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
@@ -35,34 +42,24 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+        print(loadedCities)
         tableView.delegate = self
         tableView.dataSource = self
+        loadFavorites()
+        animateTable()
     }
     
-    func animateTable(){
-        tableView.reloadData()
-        let cells = tableView.visibleCells
-        
-        let tableViewHeight = tableView.bounds.size.height
-        
-        for cell in cells {
-            cell.transform = CGAffineTransform(translationX: 0, y: tableViewHeight)
-        }
-        
-        var delayCounter = 0
-        
-        for cell in cells {
-            UIView.animate(withDuration: 1.75, delay: Double(delayCounter) * 0.05,usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseIn, .curveEaseOut], animations: {cell.transform = CGAffineTransform.identity}, completion: nil)
-            delayCounter += 1
-        }
+    func loadFavorites(){
+        loadedCities = defaults.stringArray(forKey: "FavoriteCities") ?? [String]()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        
         animateTable()
+        
+        //tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,38 +76,31 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomTableViewCell
         cell.cellView.layer.cornerRadius = cell.cellView.frame.height / 2
-   
+
         cell.cityLabel.text = cityListArray[indexPath.row].city
-        cell.tempLabel.text = "\(cityListArray[indexPath.row].temperatue)"
+        cell.tempLabel.text = "\(cityListArray[indexPath.row].temperatue)℃"
         cell.imageView?.image = UIImage(named: cityListArray[indexPath.row].updateWeatherIcon(condition: cityListArray[indexPath.row].condition))
+        
+        
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //let cell = tableView.cellForRow(at: indexPath)
+        weatherDelegate?.showTheWeather(city : cityListArray[indexPath.row])
         
-//        let a = cityListArray[indexPath.row]
-        //weatherDelegate?.city = cityListArray[indexPath.row].city
-        weatherDelegate?.showTheHotPocket(city : cityListArray[indexPath.row])
-        
-        //print("\(weatherDelegate?.city)")
         self.dismiss(animated: true, completion: nil)
-//        performSegue(withIdentifier: "justShow", sender: self)
-        
-//        let chosenCity = cityListArray[indexPath.row].city
-//        delegate?.userEnteredANewCityName(city: chosenCity)
-//        self.dismiss(animated: true, completion: nil)
     }
 
     
     
     func userEnteredANewCityName(city: String) {
         let params : [String : String] = ["q" : city, "appid" : APP_ID]
-        
+
         getWeatherData(url: WEATHER_URL, parameters: params)
     }
     
@@ -122,6 +112,7 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 print("Success! Got the weather data")
                 
                 let weatherJSON : JSON = JSON(response.result.value!)
+                self.updateWeatherData(json: weatherJSON)
             
             } else {
                 print("Error \(String(describing: response.result.error))")
@@ -156,6 +147,8 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func updateUIWithWeatherData() {
 
         let customCell = CustomTableViewCell()
+        
+        //let indexOfCell : Int = tableView.indexPath(for: customCell)!.row
 
         customCell.tempLabel.text = String("\(weatherDataModel.temperatue)℃")
         customCell.cityLabel.text = weatherDataModel.city
@@ -163,15 +156,23 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "justShow" {
-//            if let cell = sender as? CustomTableViewCell{
-//                let indexOfCell : Int = tableView.indexPath(for: cell)!.row
-//                let ViewCityVC = segue.destination as! ViewController
-//                let cityName = cityListArray[indexOfCell].city
-//                delegate?.userEnteredANewCityName(city: cityName)
-//                //ViewCityVC.data = cityName
-//            }
-//        }
-//    }
+    func animateTable(){
+        tableView.reloadData()
+        let cells = tableView.visibleCells
+        
+        let tableViewHeight = tableView.bounds.size.height
+        
+        for cell in cells {
+            cell.transform = CGAffineTransform(translationX: 0, y: tableViewHeight)
+        }
+        
+        var delayCounter = 0
+        
+        for cell in cells {
+            UIView.animate(withDuration: 1.75, delay: Double(delayCounter) * 0.05,usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseIn, .curveEaseOut], animations: {cell.transform = CGAffineTransform.identity}, completion: nil)
+            delayCounter += 1
+        }
+    }
+    
+    
 }

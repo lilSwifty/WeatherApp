@@ -11,13 +11,13 @@ import CoreLocation
 import Alamofire
 import SwiftyJSON
 
-protocol showPussyProtocol {
-    func showTheHotPocket(city : WeatherDataModel)
+protocol showWeatherProtocol {
+    func showTheWeather(city : WeatherDataModel)
 }
 
-class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate, showPussyProtocol{
+class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate, showWeatherProtocol{
     
-    
+    let defaults = UserDefaults.standard
     
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
@@ -29,7 +29,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     
     let locationManager = CLLocationManager()
     
-//    let defaults = UserDefaults.standard
+    var cityListFav : [String] = []
 
     
     @IBOutlet weak var weatherLogo: UIImageView!
@@ -49,13 +49,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        
-        
         self.weatherLogo.alpha = 0.0
         self.cityName.alpha = 0.0
         self.temp.alpha = 0.0
         showAllViews()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //loadFavorites()
+        print(cityListFav.count)
+        print(cityListFav)
     }
 
     @IBAction func addCityToList(_ sender: Any) {
@@ -65,10 +69,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
             print("list empty")
         } else {
             favoriteCities.append(favoriteCity!)
-//            self.defaults.set(self.favoriteCities, forKey: "FavoriteCities")
+            cityListFav.append(cityName.text!)
+            defaults.set(cityListFav, forKey: "FavoriteCities")
+            
         }
         
     }
+    
+//    func loadFavorites(){
+//        cityListFav = defaults.stringArray(forKey: "FavoriteCities") ?? [String]()
+//    }
     
     
     override func didReceiveMemoryWarning() {
@@ -178,17 +188,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
             let destinationVC = segue.destination as! NewCityViewController
             destinationVC.delegate = self
         } else if segue.identifier == "addAndShow" || segue.identifier == "justShow"{
-//            if let cities = defaults.array(forKey: "FavoriteCities") as? [WeatherDataModel] {
-//                favoriteCities = cities
-//            }
+
             let destionationVC = segue.destination as! secondViewController
             destionationVC.cityListArray = favoriteCities
+            destionationVC.loadedCities = cityListFav
             destionationVC.weatherDelegate = self
             
         }
     }
-    func showTheHotPocket(city : WeatherDataModel) {
-        print("drip drop din jävla fitta")
+    func showTheWeather(city : WeatherDataModel) {
+        print("drip drop motherfucker")
         updateUIWithWeatherData(city: city)
         
     }
