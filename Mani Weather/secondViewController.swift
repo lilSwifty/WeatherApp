@@ -30,6 +30,9 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     
+    func addCityStringToClass(city : WeatherDataModel){
+        loadedCities.append(city.city)
+    }
     
     @IBAction func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -45,7 +48,7 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print(loadedCities)
         tableView.delegate = self
         tableView.dataSource = self
-        loadFavorites()
+        //loadFavorites()
         animateTable()
     }
     
@@ -94,6 +97,19 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         weatherDelegate?.showTheWeather(city : cityListArray[indexPath.row])
         
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            cityListArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+
+            // handle delete (by removing the data from your array and updating the tableview)
+        }
     }
 
     

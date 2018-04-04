@@ -18,6 +18,7 @@ class WeatherDataModel {
     var pressure : Int = 0
     var weatherIconName : String = ""
     var tips : String = ""
+    var save : Bool = false
     
     func giveGoodTips(condition: Int) -> String {
         

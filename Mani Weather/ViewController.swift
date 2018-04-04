@@ -17,7 +17,8 @@ protocol showWeatherProtocol {
 
 class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate, showWeatherProtocol{
     
-    let defaults = UserDefaults.standard
+    //let defaults = UserDefaults.standard
+    
     
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
@@ -63,18 +64,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     }
 
     @IBAction func addCityToList(_ sender: Any) {
-        
+    
         let favoriteCity = cityListArray.last
+
         if cityListArray.count < 1 {
             print("list empty")
         } else {
             favoriteCities.append(favoriteCity!)
+            //addCityStringToClass(city: favoriteCity!)
             cityListFav.append(cityName.text!)
-            defaults.set(cityListFav, forKey: "FavoriteCities")
-            
+            //defaults.set(cityListFav, forKey: "FavoriteCities")
+
         }
         
     }
+    
+//    func addCityStringToClass(city : WeatherDataModel){
+//        cityListFav.append(city.city)
+//    }
     
 //    func loadFavorites(){
 //        cityListFav = defaults.stringArray(forKey: "FavoriteCities") ?? [String]()
@@ -132,6 +139,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
             newCityAdd.weatherIconName = newCityAdd.updateWeatherIcon(condition: newCityAdd.condition)
             
             newCityAdd.tips = newCityAdd.giveGoodTips(condition: newCityAdd.condition)
+            
+            newCityAdd.save = true
             
             cityListArray.append(newCityAdd)
             
@@ -191,7 +200,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
 
             let destionationVC = segue.destination as! secondViewController
             destionationVC.cityListArray = favoriteCities
-            destionationVC.loadedCities = cityListFav
+            //destionationVC.loadedCities = cityListFav
             destionationVC.weatherDelegate = self
             
         }

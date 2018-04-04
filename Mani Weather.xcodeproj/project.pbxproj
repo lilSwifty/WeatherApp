@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		531EBDFB2074DED200781491 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531EBDFA2074DED200781491 /* UserDefaults.swift */; };
 		534B646F206734C300D798F3 /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B646E206734C300D798F3 /* WeatherDataModel.swift */; };
 		534B647720681DFD00D798F3 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B647620681DFD00D798F3 /* CustomTableViewCell.swift */; };
 		534B647920690FB700D798F3 /* NewCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B647820690FB700D798F3 /* NewCityViewController.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		10A51A109CA66DA417863443 /* Pods-Mani Weather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mani Weather.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mani Weather/Pods-Mani Weather.release.xcconfig"; sourceTree = "<group>"; };
+		531EBDFA2074DED200781491 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		534B646E206734C300D798F3 /* WeatherDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
 		534B647620681DFD00D798F3 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		534B647820690FB700D798F3 /* NewCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCityViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				534B6482206E41AD00D798F3 /* WeatherData.swift */,
 				534B647620681DFD00D798F3 /* CustomTableViewCell.swift */,
 				534B647820690FB700D798F3 /* NewCityViewController.swift */,
+				531EBDFA2074DED200781491 /* UserDefaults.swift */,
 			);
 			path = "Mani Weather";
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				534B647720681DFD00D798F3 /* CustomTableViewCell.swift in Sources */,
 				538338092066AABE00DD5BF0 /* ViewController.swift in Sources */,
 				538338072066AABE00DD5BF0 /* AppDelegate.swift in Sources */,
+				531EBDFB2074DED200781491 /* UserDefaults.swift in Sources */,
 				534B647920690FB700D798F3 /* NewCityViewController.swift in Sources */,
 				534B6483206E41AE00D798F3 /* WeatherData.swift in Sources */,
 				534B646F206734C300D798F3 /* WeatherDataModel.swift in Sources */,
