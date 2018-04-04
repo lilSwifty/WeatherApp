@@ -12,8 +12,14 @@ import Alamofire
 
 
 
-class secondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
+class secondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating{
+    
+    
+
+
+    
+    var recievedCity = ""
     
     var weatherDelegate : showWeatherProtocol?
     
@@ -21,20 +27,23 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var cityListArray : [WeatherDataModel] = []
     
+    var searchResult : [String] = []
+    
     var loadedCities : [String] = []
     
     var delegate : ChangeCityDelegate?
     
-    let defaults = UserDefaults.standard
+    var searching = false
     
     @IBOutlet weak var tableView: UITableView!
     
+    let mainVC = ViewController()
     
-    func addCityStringToClass(city : WeatherDataModel){
-        loadedCities.append(city.city)
-    }
+    
+
     
     @IBAction func goBack(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
 
@@ -42,18 +51,41 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
     
+    var searchController : UISearchController!
+    
     override func viewDidLoad() {
         
+        print("TableVC show mainVC cityFavs: \(mainVC.cityListFav)")
+        print("TableVC count mainVC cityFavs: \(mainVC.cityListFav.count)")
         super.viewDidLoad()
-        print(loadedCities)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        print("TableVC loaded: \(loadedCities)")
         tableView.delegate = self
         tableView.dataSource = self
-        //loadFavorites()
+        
         animateTable()
+        
+        definesPresentationContext = true
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        navigationItem.searchController = searchController
+        
+        //updateSearchResults(for: searchController)
+        
     }
     
-    func loadFavorites(){
-        loadedCities = defaults.stringArray(forKey: "FavoriteCities") ?? [String]()
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        if let text = searchController.searchBar.text?.lowercased() {
+            searchResult = loadedCities.filter({ $0.lowercased().contains(text) })
+        } else {
+            searchResult = []
+        }
+        tableView.reloadData()
     }
     
     
@@ -75,7 +107,11 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return cityListArray.count
+        
+        if searching {
+            return searchResult.count
+        }
+        return loadedCities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
@@ -83,9 +119,13 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomTableViewCell
         cell.cellView.layer.cornerRadius = cell.cellView.frame.height / 2
 
-        cell.cityLabel.text = cityListArray[indexPath.row].city
-        cell.tempLabel.text = "\(cityListArray[indexPath.row].temperatue)℃"
-        cell.imageView?.image = UIImage(named: cityListArray[indexPath.row].updateWeatherIcon(condition: cityListArray[indexPath.row].condition))
+        let params : [String : String] = ["q" : loadedCities[indexPath.row], "appid" : APP_ID]
+        
+        getWeatherData(url: WEATHER_URL, parameters: params, cell: cell)
+        
+//        cell.cityLabel.text = cityListArray[indexPath.row].city
+//        cell.tempLabel.text = "\(cityListArray[indexPath.row].temperatue)℃"
+//        cell.imageView?.image = UIImage(named: cityListArray[indexPath.row].updateWeatherIcon(condition: cityListArray[indexPath.row].condition))
         
         
         return cell
@@ -105,40 +145,39 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            cityListArray.remove(at: indexPath.row)
+            //mainVC.cityListFav.remove(at: indexPath.row)
+            loadedCities.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-
-            // handle delete (by removing the data from your array and updating the tableview)
         }
     }
 
     
     
-    func userEnteredANewCityName(city: String) {
-        let params : [String : String] = ["q" : city, "appid" : APP_ID]
-
-        getWeatherData(url: WEATHER_URL, parameters: params)
-    }
+//    func userEnteredANewCityName(city: String) {
+//        let params : [String : String] = ["q" : city, "appid" : APP_ID]
+//
+//        getWeatherData(url: WEATHER_URL, parameters: params)
+//    }
     
-    func getWeatherData(url: String, parameters: [String: String]){
+    func getWeatherData(url: String, parameters: [String: String], cell: CustomTableViewCell){
         
         Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
             response in
             if response.result.isSuccess{
-                print("Success! Got the weather data")
+                print("TableVC: Success! Got the weather data")
                 
                 let weatherJSON : JSON = JSON(response.result.value!)
-                self.updateWeatherData(json: weatherJSON)
+                self.updateWeatherData(json: weatherJSON, cell: cell)
             
             } else {
-                print("Error \(String(describing: response.result.error))")
+                print("TableVC: Error \(String(describing: response.result.error))")
                 
             }
         }
         
     }
 
-    func updateWeatherData(json: JSON){
+    func updateWeatherData(json: JSON, cell: CustomTableViewCell){
 
             if let tempResult = json["main"]["temp"].double{
                 
@@ -154,9 +193,12 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 weatherDataModel.weatherIconName = weatherDataModel.updateWeatherIcon(condition: weatherDataModel.condition)
                 
+                cell.cityLabel.text = self.weatherDataModel.city
+                cell.tempLabel.text = "\(self.weatherDataModel.temperatue)℃"
+                cell.weatherIcon.image = UIImage(named: self.weatherDataModel.weatherIconName)
             
         } else {
-            print("error")
+            print("TableVC: error")
         }
     }
     

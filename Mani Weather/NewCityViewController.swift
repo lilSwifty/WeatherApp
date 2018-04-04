@@ -37,7 +37,7 @@ class NewCityViewController: UIViewController{
     @IBAction func getCityButton(_ sender: AnyObject) {
         
         let cityName = newCityTextField.text!
-        
+        navigationController?.popViewController(animated: true)
         delegate?.userEnteredANewCityName(city: cityName)
         
         self.dismiss(animated: true, completion: nil)

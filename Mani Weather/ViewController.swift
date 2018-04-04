@@ -17,20 +17,21 @@ protocol showWeatherProtocol {
 
 class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate, showWeatherProtocol{
     
-    //let defaults = UserDefaults.standard
-    
-    
+
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
     
+    //var favoriteCities : [WeatherDataModel] = []
+    
     var cityListArray : [WeatherDataModel] = []
-    var favoriteCities : [WeatherDataModel] = []
-    
     var newHomeScreenModel : WeatherDataModel?
-    
     let locationManager = CLLocationManager()
-    
     var cityListFav : [String] = []
+    
+    
+//    var dynamicAnimator : UIDynamicAnimator!
+//    var gravity : UIGravityBehavior!
+//    var collision : UICollisionBehavior!
 
     
     @IBOutlet weak var weatherLogo: UIImageView!
@@ -39,11 +40,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     @IBOutlet weak var humidityStatus: UILabel!
     @IBOutlet weak var pressureStatus: UILabel!
     @IBOutlet weak var tipsLabel: UILabel!
+    @IBOutlet weak var launchImage: UIImageView!
+    @IBOutlet weak var background2: UIImageView!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         // Do any additional setup after loading the view, typically from a nib.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -55,39 +60,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         self.temp.alpha = 0.0
         showAllViews()
         
+//        dynamicAnimator = UIDynamicAnimator(referenceView: view)
+//        gravity = UIGravityBehavior(items: [weatherLogo])
+//        collision = UICollisionBehavior(items: [weatherLogo])
+//        collision.translatesReferenceBoundsIntoBoundary = false
+//        dynamicAnimator.addBehavior(collision)
+//        dynamicAnimator.addBehavior(gravity)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         //loadFavorites()
-        print(cityListFav.count)
-        print(cityListFav)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        print("MainVC cityListCount: \(cityListFav.count)")
+        print ("MainVC cityList: \(cityListFav)")
     }
 
     @IBAction func addCityToList(_ sender: Any) {
     
-        let favoriteCity = cityListArray.last
+        let favoriteCity = cityName.text
 
         if cityListArray.count < 1 {
-            print("list empty")
+            print("MainVC addButton: list empty")
         } else {
-            favoriteCities.append(favoriteCity!)
-            //addCityStringToClass(city: favoriteCity!)
-            cityListFav.append(cityName.text!)
-            //defaults.set(cityListFav, forKey: "FavoriteCities")
+            cityListFav.append(favoriteCity!)
+
+            
 
         }
         
     }
     
-//    func addCityStringToClass(city : WeatherDataModel){
-//        cityListFav.append(city.city)
-//    }
-    
-//    func loadFavorites(){
-//        cityListFav = defaults.stringArray(forKey: "FavoriteCities") ?? [String]()
-//    }
-    
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -101,6 +104,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         UIView.animateKeyframes(withDuration: 2.5, delay: 0.1, animations: {
             self.cityName.alpha = 1.0
             })
+        UIView.animate(withDuration: 1.0, delay: 0.1, animations: {
+            self.launchImage.alpha = 0.0
+        })
     }
     
     func getWeatherData(url: String, parameters: [String: String]){
@@ -108,14 +114,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
             response in
             if response.result.isSuccess{
-                print("Success! Got the weather data")
+                print("MainVC: Success! Got the weather data")
                 
                 let weatherJSON : JSON = JSON(response.result.value!)
                 self.updateWeatherData(json: weatherJSON)
                 
             } else {
-                print("Error \(String(describing: response.result.error))")
-                self.cityName.text = "Connection Issues"
+                print("MainVC: Error \(String(describing: response.result.error))")
+                self.cityName.text = "MainVC: Connection Issues"
             }
         }
     }
@@ -134,7 +140,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
             
             newCityAdd.humidity = json["main"]["humidity"].intValue
             
-            newCityAdd.pressure = json["main"]["pressure"].intValue
+            newCityAdd.pressure = json["wind"]["speed"].intValue
             
             newCityAdd.weatherIconName = newCityAdd.updateWeatherIcon(condition: newCityAdd.condition)
             
@@ -157,8 +163,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         cityName.text = city.city
         temp.text = String("\(city.temperatue)℃")
         weatherLogo.image = UIImage(named: city.weatherIconName)
-        humidityStatus.text = String("Humidity: \(city.humidity)")
-        pressureStatus.text = String("Pressure: \(city.pressure)")
+        humidityStatus.text = String("Humidity: \(city.humidity)%")
+        pressureStatus.text = String("Wind speed: \(city.pressure)m/s")
         tipsLabel.text = city.tips
     }
     
@@ -167,7 +173,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         if location.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
-            print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
+            print("MainVC: longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
             
             let latitude = String(location.coordinate.latitude)
             let longitude = String(location.coordinate.longitude)
@@ -181,7 +187,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
+        print ("MainVC: \(error)")
         cityName.text = "Location unavailable"
     }
     
@@ -199,21 +205,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         } else if segue.identifier == "addAndShow" || segue.identifier == "justShow"{
 
             let destionationVC = segue.destination as! secondViewController
-            destionationVC.cityListArray = favoriteCities
-            //destionationVC.loadedCities = cityListFav
-            destionationVC.weatherDelegate = self
             
+            destionationVC.weatherDelegate = self
+            destionationVC.loadedCities = cityListFav
+            
+            //destionationVC.cityListArray = favoriteCities
+            //destionationVC.recievedCity = cityName.text!
         }
     }
     func showTheWeather(city : WeatherDataModel) {
-        print("drip drop motherfucker")
+        print("MainVC showTheWeather: drip drop motherfucker")
         updateUIWithWeatherData(city: city)
         
     }
-    
-    
-    
-    
     
 }
 
