@@ -40,7 +40,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     @IBOutlet weak var temp: UILabel!
     @IBOutlet weak var humidityStatus: UILabel!
     @IBOutlet weak var pressureStatus: UILabel!
-    @IBOutlet weak var tipsLabel: UILabel!
+    @IBOutlet weak var tipsImage: UIImageView!
     @IBOutlet weak var launchImage: UIImageView!
     @IBOutlet weak var background2: UIImageView!
     
@@ -170,7 +170,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         weatherLogo.image = UIImage(named: city.weatherIconName)
         humidityStatus.text = String("Humidity: \(city.humidity)%")
         pressureStatus.text = String("Wind speed: \(city.pressure)m/s")
-        tipsLabel.text = city.tips
+        tipsImage.image = UIImage(named: city.tips)
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

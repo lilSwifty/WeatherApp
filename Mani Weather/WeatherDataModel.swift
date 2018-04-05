@@ -25,37 +25,37 @@ class WeatherDataModel {
         switch (condition) {
             
         case 0...300 :
-            return "It's windy outside! Hold your hat!"
+            return "005-hat"
             
         case 301...500 :
-            return "You might experience some light rain.."
+            return "001-umbrella"
             
         case 501...600 :
-            return "Don't forget your umbrella!"
+            return "001-umbrella"
             
         case 601...700 :
-            return "It's snowing! Grab some good boots!"
+            return "005-hat"
             
         case 701...771 :
-            return "Be careful if you're driving..."
+            return "004-shirt"
             
         case 772...799 :
-            return "Expect the worst. Best to just keep inside!"
+            return "005-hat"
             
         case 800 :
-            return "What a lovely weather, you should go for a walk"
+            return "002-dress"
             
         case 801...804 :
-            return "You might see the sun..."
+            return "003-eyeglasses"
             
         case 900...903, 905...1000  :
-            return "Holy shit, it's armageddon"
+            return "005-hat"
             
         case 903 :
-            return "snow, snow, snow, when will it end?"
+            return "005-hat"
             
         case 904 :
-            return "Glory! Praise the lord for this weather"
+            return "002-dress"
             
         default :
             return "dunno"
