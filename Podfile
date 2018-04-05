@@ -8,5 +8,6 @@ target 'Mani Weather' do
   # Pods for Mani Weather
 pod 'SwiftyJSON'
 pod 'Alamofire'
+pod 'GraphKit'
 
 end

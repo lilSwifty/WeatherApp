@@ -15,29 +15,25 @@ protocol sendBack  {
 }
 
 
-class secondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating{
-   
-    
-    var recievedCity = ""
-    
-    //var weatherDelegate : showWeatherProtocol?
-    
+class secondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating{
+
+
     let weatherDataModel = WeatherDataModel()
-    
+    var array : [String] = []
     var cityListArray : [WeatherDataModel] = []
     
     var searchResult : [String] = []
     
     var loadedCities : [String] = []
     
-    var searching = false
+    var backDelegate : sendBack?
+    var searchController : UISearchController!
+    var defaults = UserDefaults.standard
+    var key = "FavoriteCities"
     
     @IBOutlet weak var tableView: UITableView!
     
-    var backDelegate : sendBack?
     
-    var defaults = UserDefaults.standard
-    var key = "FavoriteCities"
     
     @IBAction func goBack(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -48,13 +44,20 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
     
-    var searchController : UISearchController!
+    
     
     override func viewDidLoad() {
         
 //        print("TableVC show mainVC cityFavs: \(mainVC.cityListArray)")
 //        print("TableVC count mainVC cityFavs: \(mainVC.cityListArray.count)")
         super.viewDidLoad()
+        definesPresentationContext = true
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        navigationItem.searchController = searchController
         
         loadedCities = defaults.stringArray(forKey: key) ?? [String]()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -65,32 +68,43 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         animateTable()
         
-        definesPresentationContext = true
         
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        
-        navigationItem.searchController = searchController
         
         //updateSearchResults(for: searchController)
         
     }
     
+
+    
     func updateSearchResults(for searchController: UISearchController) {
-        
-        if let text = searchController.searchBar.text?.lowercased() {
-            searchResult = loadedCities.filter({ $0.lowercased().contains(text) })
+
+        if let searchText = searchController.searchBar.text?.lowercased() {
+            searchResult = loadedCities.filter({$0.lowercased().contains(searchText)})
         } else {
             searchResult = []
         }
         tableView.reloadData()
+    }
+
+    
+
+    var userIsSearching : Bool {
+        if let searchText = searchController.searchBar.text {
+            if searchText.isEmpty {
+                return false
+            } else {
+                return searchController.isActive
+            }
+        } else {
+            return false
+        }
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadedCities = defaults.stringArray(forKey: key) ?? [String]()
+        //searchController.searchBar.becomeFirstResponder()
 
         animateTable()
         
@@ -107,19 +121,26 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        
-        if searching {
+
+        if userIsSearching {
             return searchResult.count
+        } else {
+            return loadedCities.count
         }
-        return loadedCities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
+        if userIsSearching{
+            array = searchResult
+        } else {
+            array = loadedCities
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomTableViewCell
         cell.cellView.layer.cornerRadius = cell.cellView.frame.height / 2
 
-        let params : [String : String] = ["q" : loadedCities[indexPath.row], "appid" : APP_ID]
+        let params : [String : String] = ["q" : array[indexPath.row], "appid" : APP_ID]
         
         getWeatherData(url: WEATHER_URL, parameters: params, cell: cell)
         
@@ -134,10 +155,9 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        print("User clicked: \(array[indexPath.row])")
         
-        print("User clicked: \(loadedCities[indexPath.row])")
-        
-        let city = loadedCities[indexPath.row]
+        let city = array[indexPath.row]
         
         backDelegate?.updateUIWithData(city: city)
         

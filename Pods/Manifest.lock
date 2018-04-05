@@ -1,15 +1,24 @@
 PODS:
   - Alamofire (4.7.0)
+  - FrameAccessor (1.3.2)
+  - GraphKit (1.1.1):
+    - FrameAccessor (~> 1.3.2)
+    - MKFoundationKit/NSArray (~> 1.2.2)
+  - MKFoundationKit/NSArray (1.2.3)
   - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - Alamofire
+  - GraphKit
   - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  FrameAccessor: 0f7ba6ce37be9a5d0302a27c731dca70af8d438b
+  GraphKit: e2336bed87d9313020af525dedbca54b62e93533
+  MKFoundationKit: 882d74557944790d4d9e172961ed71d6a66804b7
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 53bbb0a325ab69f4e6da41bd0291aa2e7ca53041
+PODFILE CHECKSUM: 122373ead09a23e389f02420abfb35f023a67069
 
 COCOAPODS: 1.4.0
