@@ -36,6 +36,8 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var backDelegate : sendBack?
     
+    var defaults = UserDefaults.standard
+    var key = "FavoriteCities"
     
     @IBAction func goBack(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -53,6 +55,8 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        print("TableVC show mainVC cityFavs: \(mainVC.cityListArray)")
 //        print("TableVC count mainVC cityFavs: \(mainVC.cityListArray.count)")
         super.viewDidLoad()
+        
+        loadedCities = defaults.stringArray(forKey: key) ?? [String]()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         print("TableVC loaded: \(loadedCities)")
@@ -86,7 +90,8 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        loadedCities = defaults.stringArray(forKey: key) ?? [String]()
+
         animateTable()
         
         //tableView.reloadData()
@@ -150,7 +155,9 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             //mainVC.cityListFav.remove(at: indexPath.row)
+            
             loadedCities.remove(at: indexPath.row)
+            defaults.set(loadedCities, forKey: key)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

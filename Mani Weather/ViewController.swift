@@ -19,13 +19,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
 
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
-    
+    let newCityAdd = WeatherDataModel()
     var favoriteCities : [WeatherDataModel] = []
     
     var cityListArray : [WeatherDataModel] = []
     var newHomeScreenModel : WeatherDataModel?
     let locationManager = CLLocationManager()
     var cityListFav : [String] = []
+    let defaults = UserDefaults.standard
+    let key = "FavoriteCities"
     
     
 //    var dynamicAnimator : UIDynamicAnimator!
@@ -68,7 +70,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //loadFavorites()
+        getSaved()
         
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         print("MainVC cityListCount: \(cityListFav.count)")
@@ -78,16 +80,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     @IBAction func addCityToList(_ sender: Any) {
     
         let favoriteCity = cityName.text
-
-        if cityListArray.count < 1 {
-            print("MainVC addButton: list empty")
-        } else {
-            cityListFav.append(favoriteCity!)
-
-            
-
-        }
         
+        cityListArray.append(newCityAdd)
+        cityListFav.append(favoriteCity!)
+        defaults.set(cityListFav, forKey: key)
+
+//        if cityListArray.count < 1 {
+//            print("MainVC addButton: list empty")
+//        } else {
+//            cityListFav.append(favoriteCity!)
+//        }
+        
+    }
+    
+    func getSaved(){
+        cityListFav = defaults.stringArray(forKey: key) ?? [String]()
     }
     
 
@@ -129,9 +136,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     func updateWeatherData(json: JSON){
         
         if let tempResult = json["main"]["temp"].double{
-            
-            let newCityAdd = WeatherDataModel()
-            
+
             newCityAdd.temperatue = Int(tempResult - 273.15)
             
             newCityAdd.city = json["name"].stringValue
