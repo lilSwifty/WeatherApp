@@ -10,18 +10,17 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-
+protocol sendBack  {
+    func updateUIWithData(city: String)
+}
 
 
 class secondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating{
-    
-    
-
-
+   
     
     var recievedCity = ""
     
-    var weatherDelegate : showWeatherProtocol?
+    //var weatherDelegate : showWeatherProtocol?
     
     let weatherDataModel = WeatherDataModel()
     
@@ -31,16 +30,12 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var loadedCities : [String] = []
     
-    var delegate : ChangeCityDelegate?
-    
     var searching = false
     
     @IBOutlet weak var tableView: UITableView!
     
-    let mainVC = ViewController()
+    var backDelegate : sendBack?
     
-    
-
     
     @IBAction func goBack(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -55,8 +50,8 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         
-        print("TableVC show mainVC cityFavs: \(mainVC.cityListFav)")
-        print("TableVC count mainVC cityFavs: \(mainVC.cityListFav.count)")
+//        print("TableVC show mainVC cityFavs: \(mainVC.cityListArray)")
+//        print("TableVC count mainVC cityFavs: \(mainVC.cityListArray.count)")
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
@@ -134,9 +129,17 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        weatherDelegate?.showTheWeather(city : cityListArray[indexPath.row])
         
+        print("User clicked: \(loadedCities[indexPath.row])")
+        
+        let city = loadedCities[indexPath.row]
+        
+        backDelegate?.updateUIWithData(city: city)
+        
+        navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
+
+        
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -144,6 +147,7 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             //mainVC.cityListFav.remove(at: indexPath.row)
             loadedCities.remove(at: indexPath.row)

@@ -11,17 +11,16 @@ import CoreLocation
 import Alamofire
 import SwiftyJSON
 
-protocol showWeatherProtocol {
-    func showTheWeather(city : WeatherDataModel)
-}
 
-class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate, showWeatherProtocol{
+
+class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate, sendBack{
+    
     
 
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
     
-    //var favoriteCities : [WeatherDataModel] = []
+    var favoriteCities : [WeatherDataModel] = []
     
     var cityListArray : [WeatherDataModel] = []
     var newHomeScreenModel : WeatherDataModel?
@@ -70,6 +69,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     
     override func viewDidAppear(_ animated: Bool) {
         //loadFavorites()
+        
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         print("MainVC cityListCount: \(cityListFav.count)")
         print ("MainVC cityList: \(cityListFav)")
@@ -192,7 +192,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     }
     
     func userEnteredANewCityName(city: String) {
-        
+
+        let params : [String : String] = ["q" : city, "appid" : APP_ID]
+
+        getWeatherData(url: WEATHER_URL, parameters: params)
+    }
+    
+    func updateUIWithData(city: String) {
         let params : [String : String] = ["q" : city, "appid" : APP_ID]
         
         getWeatherData(url: WEATHER_URL, parameters: params)
@@ -206,10 +212,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
 
             let destionationVC = segue.destination as! secondViewController
             
-            destionationVC.weatherDelegate = self
+            destionationVC.backDelegate = self
             destionationVC.loadedCities = cityListFav
             
-            //destionationVC.cityListArray = favoriteCities
+            destionationVC.cityListArray = favoriteCities
             //destionationVC.recievedCity = cityName.text!
         }
     }
