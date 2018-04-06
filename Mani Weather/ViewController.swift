@@ -30,9 +30,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     let key = "FavoriteCities"
     
     
-//    var dynamicAnimator : UIDynamicAnimator!
-//    var gravity : UIGravityBehavior!
-//    var collision : UICollisionBehavior!
+
 
     
     @IBOutlet weak var weatherLogo: UIImageView!
@@ -61,13 +59,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         self.temp.alpha = 0.0
         showAllViews()
         
-//        dynamicAnimator = UIDynamicAnimator(referenceView: view)
-//        gravity = UIGravityBehavior(items: [weatherLogo])
-//        collision = UICollisionBehavior(items: [weatherLogo])
-//        collision.translatesReferenceBoundsIntoBoundary = false
-//
-//        dynamicAnimator.addBehavior(collision)
-//        dynamicAnimator.addBehavior(gravity)
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -330,6 +330,10 @@
                                         <rect key="frame" x="13" y="13" width="354" height="307"/>
                                         <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="001-umbrella" translatesAutoresizingMaskIntoConstraints="NO" id="97b-VH-RLA">
+                                        <rect key="frame" x="125" y="104" width="125" height="125"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="XP6-Em-LSW" firstAttribute="trailing" secondItem="FK1-Q8-Rav" secondAttribute="trailingMargin" id="7sG-Yr-bdJ"/>
@@ -371,6 +375,7 @@
                         <viewLayoutGuide key="safeArea" id="FUu-VI-fzE"/>
                     </view>
                     <connections>
+                        <outlet property="dynamicImg" destination="97b-VH-RLA" id="P0m-5Q-2Wm"/>
                         <outlet property="myGraph" destination="XP6-Em-LSW" id="j5b-iR-UE8"/>
                         <outlet property="myPicker" destination="gco-5F-L46" id="9Ml-iq-D5H"/>
                     </connections>
@@ -450,6 +455,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="001-umbrella" width="64" height="64"/>
         <image name="003-eyeglasses" width="64" height="64"/>
         <image name="background5" width="313" height="470"/>
         <image name="sunny" width="128" height="128"/>

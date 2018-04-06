@@ -15,6 +15,7 @@ class CompareViewController: UIViewController,GKBarGraphDataSource, UIPickerView
     
     @IBOutlet weak var myGraph: GKBarGraph!
     @IBOutlet weak var myPicker: UIPickerView!
+    @IBOutlet weak var dynamicImg: UIImageView!
     
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
     let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
@@ -24,6 +25,9 @@ class CompareViewController: UIViewController,GKBarGraphDataSource, UIPickerView
     var city1 = ""
     var city2 = ""
     
+    var dynamicAnimator : UIDynamicAnimator!
+    var gravity : UIGravityBehavior!
+    var collision : UICollisionBehavior!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +37,23 @@ class CompareViewController: UIViewController,GKBarGraphDataSource, UIPickerView
         myGraph.dataSource = self
         myPicker.dataSource = self
         myPicker.delegate = self
-
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        
         // Do any additional setup after loading the view.
     }
+    
+    //    var dynamicAnimator : UIDynamicAnimator!
+    //    var gravity : UIGravityBehavior!
+    //    var collision : UICollisionBehavior!
+    //        dynamicAnimator = UIDynamicAnimator(referenceView: view)
+    //        gravity = UIGravityBehavior(items: [weatherLogo])
+    //        collision = UICollisionBehavior(items: [weatherLogo])
+    //        collision.translatesReferenceBoundsIntoBoundary = false
+    //
+    //        dynamicAnimator.addBehavior(collision)
+    //        dynamicAnimator.addBehavior(gravity)
     
     
     @IBAction func compareButton(_ sender: Any) {
@@ -50,6 +68,14 @@ class CompareViewController: UIViewController,GKBarGraphDataSource, UIPickerView
         
         print(city1)
         print(city2)
+        
+        dynamicAnimator = UIDynamicAnimator(referenceView: view)
+        gravity = UIGravityBehavior(items: [dynamicImg])
+        collision = UICollisionBehavior(items: [dynamicImg])
+        collision.translatesReferenceBoundsIntoBoundary = false
+        
+        dynamicAnimator.addBehavior(collision)
+        dynamicAnimator.addBehavior(gravity)
     }
     
     override func didReceiveMemoryWarning() {
@@ -66,7 +92,7 @@ class CompareViewController: UIViewController,GKBarGraphDataSource, UIPickerView
     }
     
     func valueForBar(at index: Int) -> NSNumber! {
-        return citiesToCompare[index].temperatue as NSNumber
+        return citiesToCompare[index].temperatue * 3 as NSNumber
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
