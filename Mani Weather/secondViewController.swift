@@ -104,11 +104,8 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadedCities = defaults.stringArray(forKey: key) ?? [String]()
-        //searchController.searchBar.becomeFirstResponder()
-
         animateTable()
-        
-        //tableView.reloadData()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -182,13 +179,7 @@ class secondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
 
-    
-    
-//    func userEnteredANewCityName(city: String) {
-//        let params : [String : String] = ["q" : city, "appid" : APP_ID]
-//
-//        getWeatherData(url: WEATHER_URL, parameters: params)
-//    }
+
     
     func getWeatherData(url: String, parameters: [String: String], cell: CustomTableViewCell){
         

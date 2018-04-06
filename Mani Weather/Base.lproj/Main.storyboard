@@ -6,7 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -113,7 +113,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Iam-eC-beg" kind="show" id="xPo-nH-rvP"/>
+                                    <segue destination="Iam-eC-beg" kind="show" id="dcs-zh-xt2"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="003-eyeglasses" translatesAutoresizingMaskIntoConstraints="NO" id="zMH-dx-urF">
@@ -310,86 +310,69 @@
                                 <rect key="frame" x="0.0" y="555" width="375" height="112"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gpi-xm-xF1">
-                                        <rect key="frame" x="128" y="32" width="118" height="47"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Gpi-xm-xF1" secondAttribute="height" multiplier="118:47" id="jI8-hB-sIz"/>
-                                        </constraints>
+                                        <rect key="frame" x="135" y="32" width="104" height="47"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="25"/>
                                         <state key="normal" title="Compare"/>
+                                        <connections>
+                                            <action selector="compareButton:" destination="Iam-eC-beg" eventType="touchUpInside" id="Sdt-lM-a7m"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Gpi-xm-xF1" firstAttribute="centerX" secondItem="jBa-yI-cIY" secondAttribute="centerX" id="58D-2y-lYv"/>
-                                    <constraint firstItem="Gpi-xm-xF1" firstAttribute="centerY" secondItem="jBa-yI-cIY" secondAttribute="centerY" id="vKc-zp-TF9"/>
+                                    <constraint firstItem="Gpi-xm-xF1" firstAttribute="centerY" secondItem="jBa-yI-cIY" secondAttribute="centerY" id="40a-uP-N3u"/>
+                                    <constraint firstItem="Gpi-xm-xF1" firstAttribute="centerX" secondItem="jBa-yI-cIY" secondAttribute="centerX" id="Ivz-i7-KAb"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FK1-Q8-Rav" userLabel="ViewTop">
                                 <rect key="frame" x="0.0" y="64" width="375" height="333"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XP6-Em-LSW" customClass="GKBarGraph">
-                                        <rect key="frame" x="13" y="13" width="170" height="307"/>
+                                        <rect key="frame" x="13" y="13" width="354" height="307"/>
                                         <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="170" id="abQ-Lb-dvI"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWp-ad-YzS" customClass="GKBarGraph">
-                                        <rect key="frame" x="192" y="13" width="170" height="307"/>
-                                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="170" id="Gae-LL-PNd"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="XP6-Em-LSW" firstAttribute="leading" secondItem="FK1-Q8-Rav" secondAttribute="leading" constant="13" id="Hwa-fg-yZx"/>
-                                    <constraint firstAttribute="bottom" secondItem="XP6-Em-LSW" secondAttribute="bottom" constant="13" id="JOP-OD-DUv"/>
-                                    <constraint firstItem="gWp-ad-YzS" firstAttribute="top" secondItem="FK1-Q8-Rav" secondAttribute="top" constant="13" id="LMq-ps-nP3"/>
-                                    <constraint firstItem="XP6-Em-LSW" firstAttribute="top" secondItem="FK1-Q8-Rav" secondAttribute="top" constant="13" id="gHC-52-sNC"/>
-                                    <constraint firstAttribute="trailing" secondItem="gWp-ad-YzS" secondAttribute="trailing" constant="13" id="lod-VZ-gYB"/>
-                                    <constraint firstAttribute="bottom" secondItem="gWp-ad-YzS" secondAttribute="bottom" constant="13" id="sju-9Z-aIm"/>
+                                    <constraint firstItem="XP6-Em-LSW" firstAttribute="trailing" secondItem="FK1-Q8-Rav" secondAttribute="trailingMargin" id="7sG-Yr-bdJ"/>
+                                    <constraint firstItem="XP6-Em-LSW" firstAttribute="top" secondItem="FK1-Q8-Rav" secondAttribute="top" constant="13" id="UdN-Jt-Wu1"/>
+                                    <constraint firstItem="XP6-Em-LSW" firstAttribute="leading" secondItem="FK1-Q8-Rav" secondAttribute="leading" constant="13" id="XuB-Io-urg"/>
+                                    <constraint firstItem="XP6-Em-LSW" firstAttribute="centerY" secondItem="FK1-Q8-Rav" secondAttribute="centerY" id="jVk-cF-p07"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mcL-jX-1kW" userLabel="ViewCenter">
                                 <rect key="frame" x="0.0" y="397" width="375" height="150"/>
                                 <subviews>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gco-5F-L46">
-                                        <rect key="frame" x="20" y="17" width="170" height="115"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    </pickerView>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0PY-qF-5R2">
-                                        <rect key="frame" x="197" y="18" width="170" height="115"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gco-5F-L46">
+                                        <rect key="frame" x="8" y="17" width="359" height="115"/>
                                     </pickerView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="gco-5F-L46" firstAttribute="trailing" secondItem="mcL-jX-1kW" secondAttribute="trailingMargin" id="hdT-18-jhs"/>
+                                    <constraint firstItem="gco-5F-L46" firstAttribute="centerY" secondItem="mcL-jX-1kW" secondAttribute="centerY" id="opi-oG-NRj"/>
+                                    <constraint firstItem="gco-5F-L46" firstAttribute="top" secondItem="mcL-jX-1kW" secondAttribute="top" constant="17" id="rP0-RW-hcc"/>
+                                    <constraint firstItem="gco-5F-L46" firstAttribute="leading" secondItem="mcL-jX-1kW" secondAttribute="leadingMargin" id="vB7-Ee-M9u"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="jBa-yI-cIY" firstAttribute="leading" secondItem="FUu-VI-fzE" secondAttribute="leading" id="9OI-w4-gf5"/>
-                            <constraint firstItem="jBa-yI-cIY" firstAttribute="top" secondItem="HZk-dL-et6" secondAttribute="top" constant="555" id="AjU-oG-xQq"/>
-                            <constraint firstItem="jBa-yI-cIY" firstAttribute="trailing" secondItem="FUu-VI-fzE" secondAttribute="trailing" id="CLg-vf-SL4"/>
-                            <constraint firstItem="mcL-jX-1kW" firstAttribute="leading" secondItem="FUu-VI-fzE" secondAttribute="leading" id="Ds9-cY-ovu"/>
-                            <constraint firstItem="mcL-jX-1kW" firstAttribute="top" secondItem="HZk-dL-et6" secondAttribute="top" constant="397" id="FNX-yg-58L"/>
-                            <constraint firstItem="FK1-Q8-Rav" firstAttribute="top" secondItem="FUu-VI-fzE" secondAttribute="top" id="OL6-y4-NiN"/>
-                            <constraint firstItem="jBa-yI-cIY" firstAttribute="top" secondItem="mcL-jX-1kW" secondAttribute="bottom" constant="8" symbolic="YES" id="Vv6-rS-xlV"/>
-                            <constraint firstItem="jBa-yI-cIY" firstAttribute="top" secondItem="mcL-jX-1kW" secondAttribute="bottom" constant="8" id="ajr-hl-SHM"/>
-                            <constraint firstItem="mcL-jX-1kW" firstAttribute="top" secondItem="FK1-Q8-Rav" secondAttribute="bottom" id="bzU-vI-Wti"/>
-                            <constraint firstItem="mcL-jX-1kW" firstAttribute="top" secondItem="FK1-Q8-Rav" secondAttribute="bottom" id="lQH-QC-LOJ"/>
-                            <constraint firstItem="FK1-Q8-Rav" firstAttribute="leading" secondItem="FUu-VI-fzE" secondAttribute="leading" id="lu5-DN-kFT"/>
-                            <constraint firstItem="jBa-yI-cIY" firstAttribute="bottom" secondItem="FUu-VI-fzE" secondAttribute="bottom" id="qqK-S4-xCF"/>
-                            <constraint firstItem="mcL-jX-1kW" firstAttribute="trailing" secondItem="FUu-VI-fzE" secondAttribute="trailing" id="qta-E5-c83"/>
-                            <constraint firstItem="jBa-yI-cIY" firstAttribute="bottom" secondItem="FUu-VI-fzE" secondAttribute="bottom" id="w5w-3h-N5z"/>
-                            <constraint firstItem="FK1-Q8-Rav" firstAttribute="trailing" secondItem="FUu-VI-fzE" secondAttribute="trailing" id="xkZ-c7-I6d"/>
+                            <constraint firstItem="jBa-yI-cIY" firstAttribute="top" secondItem="mcL-jX-1kW" secondAttribute="bottom" constant="8" symbolic="YES" id="Cqh-5r-ssY"/>
+                            <constraint firstItem="FK1-Q8-Rav" firstAttribute="leading" secondItem="HZk-dL-et6" secondAttribute="leading" id="EV1-KG-zuy"/>
+                            <constraint firstAttribute="trailing" secondItem="FK1-Q8-Rav" secondAttribute="trailing" id="K6B-nz-MEl"/>
+                            <constraint firstItem="mcL-jX-1kW" firstAttribute="top" secondItem="HZk-dL-et6" secondAttribute="top" constant="397" id="MbC-Ur-8Kr"/>
+                            <constraint firstItem="FK1-Q8-Rav" firstAttribute="leading" secondItem="mcL-jX-1kW" secondAttribute="leading" id="Rgw-n8-4UH"/>
+                            <constraint firstItem="mcL-jX-1kW" firstAttribute="leading" secondItem="jBa-yI-cIY" secondAttribute="leading" id="SGd-Un-uCY"/>
+                            <constraint firstItem="mcL-jX-1kW" firstAttribute="trailing" secondItem="jBa-yI-cIY" secondAttribute="trailing" id="UgK-nl-0CI"/>
+                            <constraint firstItem="jBa-yI-cIY" firstAttribute="bottom" secondItem="FUu-VI-fzE" secondAttribute="bottom" id="XSG-H0-9gd"/>
+                            <constraint firstItem="jBa-yI-cIY" firstAttribute="top" secondItem="HZk-dL-et6" secondAttribute="top" constant="555" id="dMH-4a-eeC"/>
+                            <constraint firstItem="FK1-Q8-Rav" firstAttribute="top" secondItem="FUu-VI-fzE" secondAttribute="top" id="dot-3Y-gia"/>
+                            <constraint firstItem="mcL-jX-1kW" firstAttribute="top" secondItem="FK1-Q8-Rav" secondAttribute="bottom" id="hMf-fk-NO8"/>
+                            <constraint firstItem="FK1-Q8-Rav" firstAttribute="trailing" secondItem="mcL-jX-1kW" secondAttribute="trailing" id="ywm-Tg-04V"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FUu-VI-fzE"/>
                     </view>
                     <connections>
-                        <outlet property="compareButton" destination="Gpi-xm-xF1" id="cnh-GM-EaP"/>
-                        <outlet property="leftGraph" destination="XP6-Em-LSW" id="hWL-Pb-KY1"/>
-                        <outlet property="leftPicker" destination="gco-5F-L46" id="PfM-vv-edX"/>
-                        <outlet property="rightGraph" destination="gWp-ad-YzS" id="7F0-nS-FFp"/>
-                        <outlet property="rightPicker" destination="0PY-qF-5R2" id="NCG-iQ-Ned"/>
+                        <outlet property="myGraph" destination="XP6-Em-LSW" id="j5b-iR-UE8"/>
+                        <outlet property="myPicker" destination="gco-5F-L46" id="9Ml-iq-D5H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDw-HU-iNe" userLabel="First Responder" sceneMemberID="firstResponder"/>

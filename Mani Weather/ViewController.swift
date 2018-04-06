@@ -65,6 +65,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
 //        gravity = UIGravityBehavior(items: [weatherLogo])
 //        collision = UICollisionBehavior(items: [weatherLogo])
 //        collision.translatesReferenceBoundsIntoBoundary = false
+//
 //        dynamicAnimator.addBehavior(collision)
 //        dynamicAnimator.addBehavior(gravity)
     }

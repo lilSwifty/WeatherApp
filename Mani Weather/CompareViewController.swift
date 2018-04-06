@@ -2,65 +2,75 @@
 //  CompareViewController.swift
 //  Mani Weather
 //
-//  Created by Mani Sedighi on 2018-04-05.
+//  Created by Mani Sedighi on 2018-04-06.
 //  Copyright © 2018 Mani Sedighi. All rights reserved.
 //
 
 import UIKit
 import GraphKit
+import Alamofire
+import SwiftyJSON
 
-class CompareViewController: UIViewController, GKBarGraphDataSource, UIPickerViewDelegate, 
-UIPickerViewDataSource {
+class CompareViewController: UIViewController,GKBarGraphDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    @IBOutlet weak var myGraph: GKBarGraph!
+    @IBOutlet weak var myPicker: UIPickerView!
     
-
-    
-    @IBOutlet weak var leftGraph: GKBarGraph!
-    @IBOutlet weak var rightGraph: GKBarGraph!
-    @IBOutlet weak var leftPicker: UIPickerView!
-    @IBOutlet weak var rightPicker: UIPickerView!
-    @IBOutlet weak var compareButton: UIButton!
-    
-    let defaults = UserDefaults.standard
-    let key = "FavoriteCities"
+    let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
+    let APP_ID = "1dd1e0b08f4e193eabfb665c83a7d60c"
+    var citiesToCompare : [WeatherDataModel] = []
     
     var loadedCities : [String] = []
+    var city1 = ""
+    var city2 = ""
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadedCities = defaults.stringArray(forKey: key) ?? [String]()
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        leftPicker.dataSource = self
-        leftPicker.delegate = self
-        rightPicker.dataSource = self
-        rightPicker.delegate = self
+        loadedCities = UserDefaults.standard.stringArray(forKey: "FavoriteCities") ?? [String]()
+        print(loadedCities)
         
-        leftGraph.dataSource = self
-        rightGraph.dataSource = self
-        
-        leftGraph.draw()
-        rightGraph.draw()
+        myGraph.dataSource = self
+        myPicker.dataSource = self
+        myPicker.delegate = self
 
         // Do any additional setup after loading the view.
     }
-
+    
+    
+    @IBAction func compareButton(_ sender: Any) {
+        city1 = loadedCities[myPicker.selectedRow(inComponent: 0)]
+        city2 = loadedCities[myPicker.selectedRow(inComponent: 1)]
+        
+        let params1 : [String : String] = ["q" : city1, "appid" : APP_ID]
+        let params2 : [String : String] = ["q" : city2, "appid" : APP_ID]
+        
+        getWeatherData(url: WEATHER_URL, parameters: params1)
+        getWeatherData(url: WEATHER_URL, parameters: params2)
+        
+        print(city1)
+        print(city2)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    func titleForBar(at index: Int) -> String! {
+        return "℃"
+    }
     
     func numberOfBars() -> Int {
-        return 3
+        return 2
     }
     
     func valueForBar(at index: Int) -> NSNumber! {
-        //gör en webrequest ?
-        return index * 10 as NSNumber
+        return citiesToCompare[index].temperatue as NSNumber
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return 2
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -71,18 +81,61 @@ UIPickerViewDataSource {
         return loadedCities[row]
     }
     
-    func titleForBar(at index: Int) -> String! {
-        return "\(index)"
+    func updateWeatherData(json: JSON){
+        
+        if let tempResult = json["main"]["temp"].double{
+            
+            let newCityAdd = WeatherDataModel()
+            
+            newCityAdd.temperatue = Int(tempResult - 273.15)
+            
+            newCityAdd.city = json["name"].stringValue
+            
+            newCityAdd.condition = json["weather"][0]["id"].intValue
+            
+            newCityAdd.humidity = json["main"]["humidity"].intValue
+            
+            newCityAdd.pressure = json["wind"]["speed"].intValue
+            
+            newCityAdd.weatherIconName = newCityAdd.updateWeatherIcon(condition: newCityAdd.condition)
+            
+            newCityAdd.tips = newCityAdd.giveGoodTips(condition: newCityAdd.condition)
+            
+            newCityAdd.save = true
+            
+            citiesToCompare.append(newCityAdd)
+            
+            if citiesToCompare.count > 1 {
+                updateUIWithData(city: newCityAdd)
+            }
+  
+            
+        } else {
+            print("Weather Unavailable")
+        }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func getWeatherData(url: String, parameters: [String: String]){
+        
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
+            response in
+            if response.result.isSuccess{
+                print("MainVC: Success! Got the weather data")
+                
+                let weatherJSON : JSON = JSON(response.result.value!)
+                self.updateWeatherData(json: weatherJSON)
+                
+            } else {
+                print("MainVC: Error \(String(describing: response.result.error))")
+                //self.cityName.text = "MainVC: Connection Issues"
+            }
+        }
     }
-    */
+    
+    func updateUIWithData(city: WeatherDataModel) {
+        myGraph.draw()
+        citiesToCompare = []
+    }
+    
 
 }
