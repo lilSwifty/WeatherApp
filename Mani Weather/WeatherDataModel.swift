@@ -47,7 +47,7 @@ class WeatherDataModel {
             return "sunglasses"
             
         case 801...804 :
-            return "yellowHat"
+            return "cap"
             
         case 900...903, 905...1000  :
             return "neck"
