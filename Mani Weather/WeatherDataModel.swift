@@ -18,47 +18,49 @@ class WeatherDataModel {
     var pressure : Int = 0
     var weatherIconName : String = ""
     var tips : String = ""
+    var access : String = ""
     var save : Bool = false
     
     func giveGoodTips(condition: Int) -> String {
         
         switch (condition) {
-            
+         
         case 0...300 :
-            return "005-hat"
+            return "yellowHat"
             
         case 301...500 :
-            return "001-umbrella"
+            return "umbrella"
             
         case 501...600 :
-            return "001-umbrella"
+            return "umbrella"
             
         case 601...700 :
-            return "005-hat"
+            return "neck"
             
         case 701...771 :
-            return "004-shirt"
+            return "cap"
             
         case 772...799 :
-            return "005-hat"
+            return "yellowHat"
             
         case 800 :
-            return "002-dress"
+            return "sunglasses"
             
         case 801...804 :
-            return "003-eyeglasses"
+            return "yellowHat"
             
         case 900...903, 905...1000  :
-            return "005-hat"
+            return "neck"
             
         case 903 :
-            return "005-hat"
+            return "neck"
             
         case 904 :
-            return "002-dress"
+            return "bathingShorts"
             
         default :
             return "dunno"
+        
         }
     }
     

@@ -84,7 +84,7 @@ class CompareViewController: UIViewController,GKBarGraphDataSource, UIPickerView
     }
     
     func titleForBar(at index: Int) -> String! {
-        return "℃"
+        return "\(citiesToCompare[index].temperatue)℃"
     }
     
     func numberOfBars() -> Int {
@@ -93,6 +93,20 @@ class CompareViewController: UIViewController,GKBarGraphDataSource, UIPickerView
     
     func valueForBar(at index: Int) -> NSNumber! {
         return citiesToCompare[index].temperatue * 3 as NSNumber
+    }
+    
+    func colorForBar(at index: Int) -> UIColor! {
+        let tempColor = citiesToCompare[index].temperatue
+        
+        if tempColor < 11 {
+            return UIColor.blue
+        } else if tempColor > 10 && tempColor < 18 {
+            return UIColor.yellow
+        } else if tempColor > 17 {
+            return UIColor.orange
+        } else {
+            return UIColor.red
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

@@ -41,6 +41,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
     @IBOutlet weak var tipsImage: UIImageView!
     @IBOutlet weak var launchImage: UIImageView!
     @IBOutlet weak var background2: UIImageView!
+    @IBOutlet weak var accessImg: UIImageView!
     
     
     
@@ -141,7 +142,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
             
             newCityAdd.weatherIconName = newCityAdd.updateWeatherIcon(condition: newCityAdd.condition)
             
-            newCityAdd.tips = newCityAdd.giveGoodTips(condition: newCityAdd.condition)
+            newCityAdd.access = newCityAdd.giveGoodTips(condition: newCityAdd.condition)
             
             newCityAdd.save = true
             
@@ -162,8 +163,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDel
         weatherLogo.image = UIImage(named: city.weatherIconName)
         humidityStatus.text = String("Humidity: \(city.humidity)%")
         pressureStatus.text = String("Wind speed: \(city.pressure)m/s")
-        tipsImage.image = UIImage(named: city.tips)
+        accessImg.image = UIImage(named: city.access)
         
+        
+        let thisTemp = Int(city.temperatue)
+        var tips : String = ""
+
+        if thisTemp > 0 && thisTemp < 11 {
+            tips = "windJacket"
+        } else if thisTemp < 0 {
+            tips = "winterJacket"
+        } else if thisTemp > 10 && thisTemp < 20{
+            tips = "vest"
+        } else if thisTemp > 20 {
+            tips = "greenShirt"
+        }
+        
+        tipsImage.image = UIImage(named: tips)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
